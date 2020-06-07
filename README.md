@@ -23,71 +23,77 @@ Inspired from [telegram.sh](https://github.com/fabianonline/telegram.sh/)
 ## Using the script
 
 * Get the latest copy of `telegram.py` and run it with:
-  * The required arguments: `(-t TOKEN | -c CHAT)` and one of the following options `(-M MESSAGE | -P PHOTO | -V VIDEO | -A AUDIO | -F FILE)`
+  * The required arguments: `(-c CHAT)` and one of the following options `(-M MESSAGE | -P PHOTO | -V VIDEO | -A AUDIO | -F FILE)`
   * Optional arguments: `(-p yes/no)` to disable/enable URL preview. `(-c TEXT)` to add a caption with Media/Documents. `(-s yes/no)` to disable/enable message notification sound.
 * The default parse mode is `Markdown`. If you want to use HTML use the flag `(-m HTML)`
+* It will use the bot api from your environment variable as BOT_API else it will not work.
+`export BOT_API="xxxxx:xxxxx"`
 
 ## Some examples of usage:
 
 - Sending normal text:
 
-`python telegram.py -t xxxxx:xxxxx -c @TestChannel -M "Hello"`
+`python telegram.py -c @TestChannel -M "Hello"`
 
 - Sending markdown text:
 
-`python telegram.py -t xxxxx:xxxxx -c @TestChannel -M "*Hello*"`
+`python telegram.py -c @TestChannel -M "*Hello*"`
 
 - Sending HTML text:
 
-`python telegram.py -t xxxxx:xxxxx -c @TestChannel -M "<b>Hello</b>" -m HTML`
+`python telegram.py -c @TestChannel -M "<b>Hello</b>" -m HTML`
 
 - Sending link with preview:
 
-`python telegram.py -t xxxxx:xxxxx -c @TestChannel -M "this is a [link](https://github.com/yshalsager/telegram.py)" -p no`
+`python telegram.py -c @TestChannel -M "this is a [link](https://github.com/yshalsager/telegram.py)" -p no`
 
 - Sending link without preview:
 
-`python telegram.py -t xxxxx:xxxxx -c @TestChannel -M "This is a [link](https://github.com/yshalsager/telegram.py)"`
+`python telegram.py -c @TestChannel -M "This is a [link](https://github.com/yshalsager/telegram.py)"`
 
 - Sending photo:
 
-`python telegram.py -t xxxxx:xxxxx -c @TestChannel -P avatar.png`
+`python telegram.py -c @TestChannel -P avatar.png`
 
 - Sending photo with caption:
 
-`python telegram.py -t xxxxx:xxxxx -c @TestChannel -P avatar.png -C "Logo"`
+`python telegram.py -c @TestChannel -P avatar.png -C "Logo"`
 
 - Sending photo with HTML caption:
 
-`python telegram.py -t xxxxx:xxxxx -c @TestChannel -m HTML -P avatar.png -C "<b>Logo</b>"`
+`python telegram.py -c @TestChannel -m HTML -P avatar.png -C "<b>Logo</b>"`
 
 - Sending GIF:
 
-`python telegram.py -t xxxxx:xxxxx -c @TestChannel -G small.gif`
+`python telegram.py -c @TestChannel -G small.gif`
 
 - Sending video:
 
-`python telegram.py -t xxxxx:xxxxx -c @TestChannel -V video.mp4`
+`python telegram.py -c @TestChannel -V video.mp4`
 
 - Sending video note:
 
-`python telegram.py -t xxxxx:xxxxx -c @TestChannel -N video.mp4`
+`python telegram.py -c @TestChannel -N video.mp4`
 
 - Sending audio:
 
-`python telegram.py -t xxxxx:xxxxx -c @TestChannel -A audio.mp3`
+`python telegram.py -c @TestChannel -A audio.mp3`
 
 - Sending voice message:
 
-`python telegram.py -t xxxxx:xxxxx -c @TestChannel -O voice.mp3`
+`python telegram.py -c @TestChannel -O voice.mp3`
 
 - Sending file:
 
-`python telegram.py -t xxxxx:xxxxx -c @TestChannel -F file.zip`
+`python telegram.py -c @TestChannel -F file.zip`
 
 - Sending file with HTML caption:
 
-`python telegram.py -t xxxxx:xxxxx -c @TestChannel -m HTML -F file.rar -C "<b>File</b>"`
+`python telegram.py -c @TestChannel -m HTML -F file.rar -C "<b>File</b>"`
+
+- Sending sticker:
+
+`python telegram.py -c @TestChannel -s <stickerid>`
 
 ## Using binary files:
 

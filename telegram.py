@@ -1,10 +1,10 @@
 from argparse import ArgumentParser
 
 from requests import post
-
+import os
 
 def arg_parse():
-    global token, chat, message, mode, preview, caption, silent, photo, gif, video, note, audio, voice, file, send, out
+    global token, chat, message, mode, preview, caption, silent, photo, gif, video, note, audio, voice, file, send, out, sticker
     switches = ArgumentParser()
     group = switches.add_mutually_exclusive_group(required=True)
     group.add_argument("-M", "--message", help="Text message")
@@ -15,7 +15,7 @@ def arg_parse():
     group.add_argument("-A", "--audio", help="Audio path")
     group.add_argument("-O", "--voice", help="Voice path")
     group.add_argument("-F", "--file", help="File path")
-    switches.add_argument("-t", "--token", required=True, help="Telegram bot token")
+    group.add_argument("-S", "--sticker", help="Sticker id")
     switches.add_argument("-c", "--chat", required=True, help="Chat to use as recipient")
     switches.add_argument("-m", "--mode", help="Text parse mode - HTML/Markdown", default="Markdown")
     switches.add_argument("-p", "--preview", help="Disable URL preview - yes/no", default="yes")
@@ -24,7 +24,7 @@ def arg_parse():
     switches.add_argument("-C", "--caption", help="Media/Document caption")
 
     args = vars(switches.parse_args())
-    token = args["token"]
+    token = os.getenv("BOT_API")
     chat = args["chat"]
     message = args["message"]
     photo = args["photo"]
@@ -39,6 +39,7 @@ def arg_parse():
     silent = args["silent"]
     out = args["output"]
     caption = args["caption"]
+    sticker = args["sticker"]
 
     if message is not None:
         send = "text"
@@ -56,6 +57,8 @@ def arg_parse():
         send = "voice"
     elif file is not None:
         send = "file"
+    elif sticker is not None:
+        send = "sticker"
 
 
 def send_message():
@@ -139,6 +142,14 @@ def send_message():
         }
         url = "https://api.telegram.org/bot" + token + "/sendDocument"
         r = post(url, files=files)
+    elif send == "sticker":
+        params = (
+            ('chat_id', chat),
+            ('parse_mode', mode),
+            ('sticker', sticker),
+        )
+        url = "https://api.telegram.org/bot" + token + "/sendSticker"
+        r = post(url, params=params)
     else:
         print("Error!")
     status = r.status_code
