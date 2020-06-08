@@ -66,7 +66,7 @@ def send_message():
     if send == "text":
         params = (
             ('chat_id', chat),
-            ('text', message),
+            ('text', message.replace(r'\n', '\n')),
             ('parse_mode', mode),
             ('disable_notification', silent),
             ('disable_web_page_preview', preview)
