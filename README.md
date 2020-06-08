@@ -95,6 +95,10 @@ Inspired from [telegram.sh](https://github.com/fabianonline/telegram.sh/)
 
 `python telegram.py -c @TestChannel -s <stickerid>`
 
+- Sending Button:
+
+`python telegram.py -c @TestChannel -M "Text" -D "button_name|url"
+
 ## Using binary files:
 
 If you want to use binary executable file for Windows and Linux check [releases](https://github.com/yshalsager/telegram.py/releases)! It's compiled with [pyinstaller](https://www.pyinstaller.org/).
