@@ -1,0 +1,39 @@
+os: linux
+language: python
+dist: bionic
+jobs:
+  include:
+    - dist: focal
+      python: "3.7"
+group: edge
+python:
+  - "3.6"
+  - "3.7"
+addons:
+  apt:
+    update: true
+before_install:
+  - curl -s https://api.github.com/repos/upx/upx/releases/latest | grep "browser_download_url" | grep "amd64" | cut -d '"' -f 4 | xargs -n 1 curl -O -sSL
+  - tar -xJf upx*.tar.xz
+  - sudo cp upx*/upx /usr/local/bin/
+  - rm -rf upx*
+  - sudo chmod a+x /usr/local/bin/upx
+install:
+  - pip install -r requirements.txt
+script:
+  - pyinstaller telegram.py
+before_deploy:
+  - ls -lA ${TRAVIS_BUILD_DIR}/dist/*/telegram*
+deploy:
+  skip_cleanup: true
+  provider: releases
+  token: "$GITHUB_TOKEN"
+  file_glob: true
+  file: ${TRAVIS_BUILD_DIR}/dist/*/telegram*
+  on:
+    tags: true
+    branch: master
+    condition: $TRAVIS_DIST == "focal" && $TRAVIS_PYTHON_VERSION == "3.7"
+branches:
+  except:
+    - /^(?i:untagged)-.*$/
